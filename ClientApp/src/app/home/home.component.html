@@ -1,0 +1,100 @@
+<h1>WELCOME TO CRUD</h1>
+<hr>
+
+<section class="container row-wrap">
+
+  <div class="item" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Estagiários</mat-card-title>
+        <mat-card-subtitle>Estudantes</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="../../assets/img/Estagiario.png" alt="Photo of a Trainee">
+      <mat-card-content>
+        <p>
+          Clique em <b>ENTRAR</b>, para   
+          <strong>Criar</strong>,
+          <strong> Editar</strong>,
+          <strong> Deletar</strong> e
+          <strong> Ver</strong> 
+          seus estagiários, tendo assim um melhor controle dos dados.
+        </p>
+      </mat-card-content>
+      <mat-card-actions fxLayoutAlign="end end">
+        <button mat-stroked-button color="primary" (click)="goTo('estagiario')">
+          ENTRAR
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="item" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Instituições</mat-card-title>
+        <mat-card-subtitle>Faculdades</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="../../assets/img/Instituicao.png" alt="Photo of a College">
+      <mat-card-content>
+          <p>
+              Clique em <b>ENTRAR</b>, para   
+              <strong>Criar</strong>,
+              <strong> Editar</strong>,
+              <strong> Deletar</strong> e
+              <strong> Ver</strong> 
+              suas instituições, tendo assim um melhor controle dos dados.
+            </p>
+      </mat-card-content>
+      <mat-card-actions fxLayoutAlign="end end">
+        <button mat-stroked-button color="accent" (click)="goTo('instituicao')">ENTRAR</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="item" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Cidades</mat-card-title>
+        <mat-card-subtitle>Urbe</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="../../assets/img/Cidade.png" alt="Photo of a City">
+      <mat-card-content>
+          <p>
+              Clique em <b>ENTRAR</b>, para   
+              <strong>Criar</strong>,
+              <strong> Editar</strong>,
+              <strong> Deletar</strong> e
+              <strong> Ver</strong> 
+              suas cidades, tendo assim um melhor controle dos dados.
+            </p>
+      </mat-card-content>
+      <mat-card-actions fxLayoutAlign="end end">
+        <button mat-stroked-button color="warn" (click)="goTo('cidade')">ENTRAR</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="item" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Estados</mat-card-title>
+        <mat-card-subtitle>País Soberano</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="../../assets/img/Estado.png" alt="Photo of a State">
+      <mat-card-content>
+          <p>
+              Clique em <b>ENTRAR</b>, para   
+              <strong>Criar</strong>,
+              <strong> Editar</strong>,
+              <strong> Deletar</strong> e
+              <strong> Ver</strong> 
+              seus estados, tendo assim um melhor controle dos dados.
+            </p>
+      </mat-card-content>
+      <mat-card-actions fxLayoutAlign="end end">
+        <button mat-stroked-button (click)="goTo('estado')">ENTRAR</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</section>

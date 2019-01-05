@@ -1,0 +1,13 @@
+button {
+    margin-top: 12px;
+}
+
+mat-dialog-actions {
+    width: auto;
+    height: auto;
+
+}
+
+mat-error {
+    margin-bottom: 24px;
+}

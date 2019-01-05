@@ -1,0 +1,17 @@
+table{
+    width: 100%;
+}
+
+.options{
+    padding: 0px 12px;
+}
+
+#add{
+    float: right;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.center{
+    text-align: center;
+}

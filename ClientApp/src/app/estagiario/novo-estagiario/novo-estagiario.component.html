@@ -1,0 +1,46 @@
+<form fxFlex fxLayoutAlign="center center" fxLayout="column" [formGroup]="form">
+
+  <h1 mat-dialog-title>Preencha os campos</h1>
+
+  <div mat-dialog-content fxLayout="column" >
+
+    <mat-form-field>
+      <mat-select required formControlName="instituicaoDeEnsinoId" placeholder="Instituição de Ensino">
+        <mat-option *ngFor="let instituicao of instituicoes" [value]="instituicao.instituicaoDeEnsinoId">
+          {{ instituicao.nome }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="instituicao?.hasError('required')">Instituição é obrigatorio</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select required formControlName="cidadeId" placeholder="Cidade">
+        <mat-option *ngFor="let cidade of cidades" [value]="cidade.cidadeId">
+          {{ cidade.nome }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cidade?.hasError('required')">Cidade é obrigatorio</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input pattern="[a-zA-ZÀ-ú\' ]*" maxlength="45" required formControlName="nome" matInput placeholder="Insira seu nome">
+      <mat-error *ngIf="nome?.hasError('required')">Nome é obrigatorio</mat-error>
+      <mat-error *ngIf="nome?.hasError('pattern')">Nome deve conter somentes letras</mat-error>
+      <mat-hint *ngIf="nome?.value?.length < 3"> Minimo {{ 3 - (nome?.value?.length || 0) }} caracteres</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input required formControlName="dataNasc" matInput [max]="maxDate" [matDatepicker]="picker" placeholder="Data de Nascimento">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="dataNasc?.hasError('required')">Data é obrigatorio</mat-error>
+      <mat-error *ngIf="dataNasc?.invalid && !dataNasc?.hasError('required')">Data invalida</mat-error>
+    </mat-form-field>
+
+  </div>
+
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button type="button" mat-button (click)="onNoClick()">CANCELAR</button>
+    <button type="button" mat-raised-button (click)="onYesClick(form)" color="primary" cdkFocusInitial>CRIAR</button>
+  </div>
+</form>

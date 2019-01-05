@@ -1,0 +1,27 @@
+table {
+    width: 100%;
+}
+
+.title {
+    text-align: center;
+}
+
+#add-button {
+    float: right;
+    margin-right: 8px;
+    margin-bottom: 12px;
+}
+
+.operat {
+    padding-left: 12px;
+}
+
+#add-icon {
+    margin-bottom: 2px;
+    margin-right: 8px;
+}
+
+.nome {
+    padding-right: 200px;
+}
+

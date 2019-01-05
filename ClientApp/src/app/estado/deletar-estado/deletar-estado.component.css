@@ -1,0 +1,9 @@
+button {
+    margin-right: 10px;
+    margin-bottom: 8px;
+}
+
+mat-dialog-actions {
+    width: auto;
+    height: auto;
+}

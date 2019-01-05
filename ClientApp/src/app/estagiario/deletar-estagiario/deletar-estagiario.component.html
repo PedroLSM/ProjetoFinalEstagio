@@ -1,0 +1,13 @@
+<div fxFlex fxLayout="column" fxLayoutAlign="center center">
+  <h1 mat-dialog-title>Deletar Estagiário</h1>
+  <div mat-dialog-content>
+    <p>Você tem certeza que quer deletar?</p>
+    <p>
+      <strong>{{ data.nome }}</strong>
+    </p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button (click)="onYesClick(data)" cdkFocusInitial color="accent">SIM</button>
+    <button mat-button (click)="onNoClick()">NÃO</button>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<h1 class="title">Lista de Cidades</h1>
+<hr>
+
+<mat-form-field class="margin-left-10">
+  <mat-select [(value)]="selected" placeholder="Filtrar por estado" 
+  (selectionChange)="onChange()">
+    <mat-option value=""></mat-option>
+    <mat-option [value]="estado" *ngFor="let estado of estadosWithCidade">
+      {{ estado.uf }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div>
+  <button id="add-button" mat-raised-button color="primary" (click)="openDialogAdd()">
+    <mat-icon id="add-icon">
+      add
+    </mat-icon>
+    Adicionar
+  </button>
+
+  <div class="container">
+    <table mat-table [dataSource]="cidades" class="mat-elevation-z8 table">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef class="id center"> Id </th>
+        <td mat-cell *matCellDef="let cidade" class="center"> {{ cidade.cidadeId }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="UF">
+        <th mat-header-cell *matHeaderCellDef class="UF center"> UF </th>
+        <td mat-cell *matCellDef="let cidade" class="center"> {{ cidade.estado.uf }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef class="nome"> Nome </th>
+        <td mat-cell *matCellDef="let cidade" class=""> {{ cidade.nome }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="deletar">
+        <th mat-header-cell *matHeaderCellDef class="center deletar"> Deletar </th>
+        <td mat-cell *matCellDef="let cidade" class="center">
+          <button mat-button class="w" (click)="openDialogDelete(cidade)">
+            <mat-icon class="">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="atualizar">
+        <th mat-header-cell *matHeaderCellDef class="center editar"> Atualizar </th>
+        <td mat-cell *matCellDef="let cidade" class="center">
+          <button mat-button class="w" (click)="openDialogUpdate(cidade)">
+            <mat-icon class="">create</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+      <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+    </table>
+  </div>
+</div>

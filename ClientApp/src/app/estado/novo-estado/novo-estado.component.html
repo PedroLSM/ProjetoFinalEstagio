@@ -1,0 +1,50 @@
+<form [formGroup]="formAdd">
+    <mat-dialog-actions>
+      <div id="parent" fxLayout="column" fxLayoutAlign="center center">
+        <mat-form-field>
+          <input
+          formControlName="uf"
+          matInput
+          required
+          maxlength="2"
+          placeholder="UF">
+        </mat-form-field>
+        <mat-error *ngIf="uf.hasError('pattern')">Duas letras maiúsculas</mat-error>
+        <mat-error *ngIf="uf.hasError('required') && uf.touched">UF é requerido</mat-error>
+        <mat-form-field>
+          <input
+          formControlName="nome"
+          matInput
+          required
+          placeholder="Nome">
+        </mat-form-field>
+        <mat-error 
+        *ngIf="nome.hasError('pattern')">
+        Somente letras e espaços
+        </mat-error>
+        <mat-error 
+          *ngIf="nome.hasError('required') && nome.touched">
+        Nome é requerido
+        </mat-error>
+        <mat-error 
+          *ngIf="nome.hasError('maxlength')">
+        Máximo {{ nome.errors.maxlength.requiredLength }} caracteres
+        </mat-error>
+        <mat-error 
+          *ngIf="nome.hasError('minlength')">
+        Mínimo {{nome.errors.minlength.requiredLength}} letras
+        </mat-error>
+
+        <button type="button" 
+        mat-flat-button (click)="onNo()">
+          Voltar
+        </button>
+
+        <button type="button" 
+        (click)="onYes(formAdd)" mat-flat-button color="primary">
+          Adicionar
+        </button>
+
+      </div>
+    </mat-dialog-actions>
+</form>

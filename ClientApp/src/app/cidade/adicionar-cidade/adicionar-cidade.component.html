@@ -1,0 +1,28 @@
+<form fxFlex fxLayoultAlign="center center" fxLayout="column" [formGroup]="form">
+  <h1 mat-dialog-title>Adicionar cidade</h1>
+  <div mat-dialog-content fxLayout="column">
+    <mat-form-field>
+      <mat-select formControlName="estadoId" placeholder="Escolha o estado">
+        <mat-option value=""></mat-option>
+        <mat-option [value]="estado.estadoId" *ngFor="let estado of estados">
+          {{ estado.uf }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="estadoId?.hasError('required')">Campo obrigatório</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input pattern="[a-zA-ZÀ-ú\' ]*" required formControlName="nome" matInput placeholder="Nome">
+      <mat-error *ngIf="nome?.hasError('required')">Campo obrigatório</mat-error>
+      <mat-error *ngIf="nome?.hasError('pattern')">Nome deve conter somentes letras</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button type="button" mat-flat-button color="warn" (click)="onNo()">
+      CANCELAR
+    </button>
+    <button type="button" mat-flat-button color="primary" (click)="onYes()" cdkFocusInitial>
+      CRIAR
+    </button>
+  </div>
+</form>

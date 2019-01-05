@@ -1,0 +1,30 @@
+<form fxFlex fxLayoutAlign="center center" fxLayout="column" [formGroup]="form">
+
+    <h1 mat-dialog-title>Editar Instituicão de Ensino</h1>
+  
+    <div mat-dialog-content fxLayout="column">
+  
+      <mat-form-field>
+        <input matInput placeholder="Sigla" required maxlength="8" formControlName="sigla" placeholder="Sigla" />
+        <mat-hint>Exemplo: UNIFOR</mat-hint>
+        <mat-error *ngIf="sigla.hasError('pattern')">Somemte letras maiúsculas</mat-error>
+        <mat-error *ngIf="nome.hasError('maxlength')">
+          Máximo {{ sigla.errors.maxlength.requiredLength }} caracteres.
+        </mat-error>
+        <mat-error *ngIf="sigla.hasError('required')">Sigla é requerido</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput required placeholder="Nome" formControlName="nome" placeholder="Nome" />
+        <mat-hint>Exemplo: Universidade de Fortaleza</mat-hint>
+        <mat-error *ngIf="nome.hasError('required')">Nome é requerido</mat-error>
+      </mat-form-field>
+  
+    </div>
+    <br>
+    <div mat-dialog-actions fxLayoutAlign="end end">
+      <button type="button" mat-button (click)="onNo()">CANCELAR</button>
+      <button type="button" mat-raised-button (click)="onYes(form)" color="primary" cdkFocusInitial>EDITAR</button>
+    </div>
+    
+  </form>

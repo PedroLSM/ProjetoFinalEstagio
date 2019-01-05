@@ -1,0 +1,62 @@
+<h1 class="center">Instituições De Ensino</h1>
+<hr>
+
+<hr />
+
+<div>
+    <button id="add" mat-raised-button (click)="openCreateDialog()" color="primary">
+      Adicionar
+      <mat-icon>
+        add
+      </mat-icon>
+    </button>
+  </div>
+
+<table mat-table [dataSource]="instituicoesDeEnsino" class="mat-elevation-z8">
+  <ng-container matColumnDef="Id">
+    <th mat-header-cell *matHeaderCellDef>Id</th>
+    <td mat-cell *matCellDef="let instituicao">
+      {{ instituicao.instituicaoDeEnsinoId }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Sigla">
+    <th mat-header-cell *matHeaderCellDef>Sigla</th>
+    <td mat-cell *matCellDef="let instituicao">{{ instituicao.sigla }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Nome">
+    <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <td mat-cell *matCellDef="let instituicao">{{ instituicao.nome }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Alunos">
+    <th mat-header-cell *matHeaderCellDef class="operat"> <b>Alunos</b> </th>
+    <td mat-cell *matCellDef="let instituicao">
+      <button mat-button>
+        <mat-icon>search</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Deletar">
+    <th mat-header-cell *matHeaderCellDef class="operat"> <b>Deletar</b> </th>
+    <td mat-cell *matCellDef="let instituicao"> 
+      <button (click)="openDeleteDialog(instituicao)" mat-button>
+        <mat-icon>delete</mat-icon>
+      </button> 
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Alterar">
+    <th mat-header-cell *matHeaderCellDef class="operat"> <b>Alterar</b> </th>
+    <td mat-cell *matCellDef="let instituicao"> 
+      <button (click)="openUpdateDialog(instituicao)" mat-button>
+        <mat-icon>edit</mat-icon>
+      </button> 
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

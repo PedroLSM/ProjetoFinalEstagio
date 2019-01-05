@@ -1,0 +1,24 @@
+<form [formGroup]="formUpdate">
+  <mat-dialog-actions>
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <mat-form-field>
+        <input matInput required placeholder="UF" formControlName="uf">
+      </mat-form-field>
+      <mat-error *ngIf="uf.hasError('pattern')">Duas letras maiúsculas</mat-error>
+      <mat-form-field>
+        <input matInput required formControlName="nome" placeholder="Nome">
+      </mat-form-field>
+      <mat-error *ngIf="nome.hasError('minlength')">Mínimo {{ nome.errors.minlength.requiredLength }} letras</mat-error>
+      <mat-error *ngIf="nome.hasError('maxlength')">Máximo {{ nome.errors.maxlength.requiredLength }} letras</mat-error>
+      <mat-error *ngIf="nome.hasError('pattern')">Somente letras e espaços</mat-error>
+
+      <button type="button" mat-flat-button (click)="onNo()">
+        Voltar
+      </button>
+
+      <button type="button" (click)="onYes(formUpdate)" mat-flat-button color="primary">
+        Atualizar
+      </button>
+    </div>
+  </mat-dialog-actions>
+</form>

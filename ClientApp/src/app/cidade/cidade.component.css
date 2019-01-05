@@ -1,0 +1,68 @@
+.title {
+    text-align: center;
+}
+
+.container {
+    width: 100%;
+}
+
+.table {
+    width: 100%;
+}
+
+.center {
+    text-align: center;
+}
+
+.w {
+    width: 40px;
+}
+
+.float-left {
+    float: left;
+}
+
+#add{
+    float: right;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#add-button {
+    float: right;
+    margin-right: 14px;
+    margin-bottom: 12px;
+}
+
+#add-icon {
+    margin-bottom: 2px;
+    margin-right: 4px;
+}
+
+.id {
+    width: 5%;
+}
+
+.UF {
+    width: 5%;
+}
+
+.nome {
+    width: 30%;
+}
+
+.editar {
+    width: 5%;
+}
+
+.deletar {
+    width: 5%;
+}
+
+.align-end {
+    text-align: end;
+}
+
+.margin-left-10 {
+    margin-left: 10px;
+}

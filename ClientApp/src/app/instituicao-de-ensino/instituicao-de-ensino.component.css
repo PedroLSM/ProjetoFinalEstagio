@@ -1,0 +1,17 @@
+.center {
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}
+
+.operat {
+  padding-left: 12px;
+}
+
+#add{
+  float: right;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
