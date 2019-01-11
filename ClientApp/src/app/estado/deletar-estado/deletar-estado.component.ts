@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogClose, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { EstadoService } from '../../services/estado/estado.service';
 
 @Component({
   selector: 'app-deletar-estado',
@@ -8,17 +9,24 @@ import { MatDialogClose, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angul
 })
 export class DeletarEstadoComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<DeletarEstadoComponent>, @Inject(MAT_DIALOG_DATA) public data) { }
+  constructor(private estadoService: EstadoService, private dialogRef: MatDialogRef<DeletarEstadoComponent>, @Inject(MAT_DIALOG_DATA) public data) { }
+  
+  ngOnInit() {
+  }
 
   onNo(): void {
     this.dialogRef.close();
   }
 
-  onYes(estado): void {
-    this.dialogRef.close(estado);
+  onYes(estado: void): void {    
+    this.estadoService.delete(estado['estadoId'])
+      .subscribe(() => {
+        this.dialogRef.close(estado);
+      }, error => {
+        alert("OCORREU UM ERRO NA HORA DE DELETAR \n" + error['_body']);
+      });
   }
 
-  ngOnInit() {
-  }
+  
 
 }

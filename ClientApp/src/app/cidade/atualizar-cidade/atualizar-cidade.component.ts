@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EstadoService } from '../../services/estado/estado.service';
+import { CidadeService } from '../../services/cidade/cidade.service';
 
 @Component({
   selector: 'app-atualizar-cidade',
@@ -26,6 +27,7 @@ export class AtualizarCidadeComponent implements OnInit {
   }
 
   constructor(
+    private cidadeService: CidadeService,
     private estadoService: EstadoService,
     public dialogRef: MatDialogRef<AtualizarCidadeComponent>,
     @Inject(MAT_DIALOG_DATA) public data) { }
@@ -37,6 +39,14 @@ export class AtualizarCidadeComponent implements OnInit {
   onYes(){
     if (!this.form.invalid) {
       this.dialogRef.close([this.cidadeId, this.form.value])
+
+      this.cidadeService.update(this.cidadeId, this.form.value)
+      .subscribe((cidadeEdited) => {
+        this.dialogRef.close([this.cidadeId, cidadeEdited])
+      }, error => {
+        alert("OCORREU UM ERRO NA HORA DE EDITAR \n" + error['_body'])
+      });
+
     } else {
       alert("Preencha o campo corretamente");
     }
@@ -44,9 +54,9 @@ export class AtualizarCidadeComponent implements OnInit {
 
   ngOnInit(): void {
     this.estadoService.getAll()
-    .subscribe(estados => {
-      this.estados = estados;
-    });
+      .subscribe(estados => {
+        this.estados = estados;
+      });
   }
 
 }

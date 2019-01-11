@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { InstituicaoService } from '../../services/instituicao/instituicao.service';
 
 @Component({
   selector: 'app-deletar-instituicao-de-ensino',
@@ -8,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class DeletarInstituicaoDeEnsinoComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<DeletarInstituicaoDeEnsinoComponent>,
+  constructor(private instituicaoService: InstituicaoService, public dialogRef: MatDialogRef<DeletarInstituicaoDeEnsinoComponent>,
     @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit() {
@@ -18,8 +19,13 @@ export class DeletarInstituicaoDeEnsinoComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onYes(instituicao): void {
-    this.dialogRef.close(instituicao);
+  onYes(instituicao: any): void {
+    this.instituicaoService.delete(instituicao.instituicaoDeEnsinoId)
+      .subscribe(() => {
+        this.dialogRef.close(instituicao);
+      }, error => {
+        alert("OCORREU UM ERRO NA HORA DE DELETAR \n" + error['_body'])
+      });
   }
 
 }

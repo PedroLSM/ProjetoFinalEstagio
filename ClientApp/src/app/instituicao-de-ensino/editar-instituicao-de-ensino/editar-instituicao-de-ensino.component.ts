@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { InstituicaoService } from '../../services/instituicao/instituicao.service';
 
 @Component({
   selector: 'app-editar-instituicao-de-ensino',
@@ -19,7 +20,7 @@ export class EditarInstituicaoDeEnsinoComponent implements OnInit {
     nome: new FormControl(this.data.nome, [Validators.required])
   });
 
-  constructor(private dialogRef: MatDialogRef<EditarInstituicaoDeEnsinoComponent>,
+  constructor(private instituicaoService: InstituicaoService, private dialogRef: MatDialogRef<EditarInstituicaoDeEnsinoComponent>,
     @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit() {
@@ -29,9 +30,16 @@ export class EditarInstituicaoDeEnsinoComponent implements OnInit {
     return this.dialogRef.close();
   }
 
-  onYes(formValues) {
+  onYes(formValues: { value: any; }) {
     if (!this.form.invalid) {
-      this.dialogRef.close([this.instituicaoDeEnsinoId, formValues.value]);
+
+      this.instituicaoService.update(this.instituicaoDeEnsinoId, formValues.value)
+        .subscribe(() => {
+          this.dialogRef.close([this.instituicaoDeEnsinoId, formValues.value]);
+        }, error => {
+          alert("OCORREU UM ERRO NA HORA DE EDITAR \n" + error['_body'])
+        });
+
     } else {
       alert('CONTÉM CAMPOS INVÁLIDOS');
     }

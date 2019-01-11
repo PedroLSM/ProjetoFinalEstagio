@@ -51,7 +51,7 @@ export class CidadeComponent implements OnInit {
 
   }
 
-  openDialogUpdate(cidade): void {
+  openDialogUpdate(cidade: any): void {
     const dialogRef = this.dialog.open(AtualizarCidadeComponent, {
       width: '300px',
       disableClose: true,
@@ -66,7 +66,7 @@ export class CidadeComponent implements OnInit {
 
   }
 
-  openDialogDelete(cidade): void {
+  openDialogDelete(cidade: any): void {
     const dialogRef = this.dialog.open(DeletarCidadeComponent, {
       width: '300px',
       disableClose: true,
@@ -81,75 +81,50 @@ export class CidadeComponent implements OnInit {
 
   }
 
-  criarCidade(cidade) {
-
-    this.cidadeService.create(cidade)
-      .subscribe(newCidade => {
-        console.log(newCidade);
-
-        if (!(this.estadosWithCidade.findIndex(val => val.estadoId == newCidade.estado.estadoId) >= 0)) {
-          this.addEstado(newCidade.estado);
-        }
-
-        this.cidades.push(newCidade);
-        this.cidadesBackup.push(newCidade);
-
-        this.table.renderRows();
-      }),
-      error => console.log(error)
+  criarCidade(newCidade: { estado: { estadoId: any; }; }) {
+    if (!(this.estadosWithCidade.findIndex(val => val.estadoId == newCidade.estado.estadoId) >= 0)) {
+      this.addEstado(newCidade.estado);
+    }
+    this.cidades.push(newCidade);
+    this.cidadesBackup.push(newCidade);
+    this.table.renderRows();
   }
 
-  editarCidade(cidadeId, cidade) {
-    this.cidadeService.update(cidadeId, cidade)
-      .subscribe((cidadeEdited) => {
-        let index = this.getIndexCidade(cidadeId);
-        let estadoIdAntigo = this.cidadesBackup[index].estado.estadoId;
-        this.cidadesBackup[index] = cidadeEdited;
+  editarCidade(cidadeId: any, cidadeEdited: { estado: { estadoId: any; }; }) {
+    let index = this.getIndexCidade(cidadeId);
+    let estadoIdAntigo = this.cidadesBackup[index].estado.estadoId;
+    this.cidadesBackup[index] = cidadeEdited;
 
-        if (cidadeEdited.estado.estadoId != estadoIdAntigo) {
+    if (cidadeEdited.estado.estadoId != estadoIdAntigo) {
+      let addEstado: boolean =
+        this.getContemEstado(cidadeEdited.estado) >= 0 ? false : true;
 
-          let addEstado: boolean =
-            this.getContemEstado(cidadeEdited.estado) >= 0 ? false : true;
+      if (!this.getEstadoContemCidade(this.selected)) {
+        let indexSelected = this.getContemEstado(this.selected);
+        this.estadosWithCidade.splice(indexSelected, 1);
+      }
 
+      if (addEstado) {
+        this.addEstado(cidadeEdited.estado);
 
-          if (!this.getEstadoContemCidade(this.selected)) {
-            let indexSelected = this.getContemEstado(this.selected);
-
-            this.estadosWithCidade.splice(indexSelected, 1);
+        let index = 0;
+        for (const estado of this.estadosWithCidade) {
+          if (!this.getEstadoContemCidade(estado)) {
+            this.estadosWithCidade.splice(index, 1);
+            break;
           }
-
-
-          if (addEstado) {
-            this.addEstado(cidadeEdited.estado);
-
-            let index = 0;
-            for (const estado of this.estadosWithCidade) {
-
-              if (!this.getEstadoContemCidade(estado)) {
-                this.estadosWithCidade.splice(index, 1);
-                break;
-              }
-
-              index = index + 1;
-            }
-
-          }
+          index = index + 1;
         }
+      }
+    }
 
-        this.onChange();
-      }),
-      error => console.log(error)
+    this.onChange();
   }
 
-  deletarCidade(cidade) {
-    this.cidadeService.delete(cidade.cidadeId)
-      .subscribe(() => {
-        let index = this.cidadesBackup.indexOf(cidade);
-
-        this.cidadesBackup.splice(index, 1);
-
-        this.onChange();
-      });
+  deletarCidade(cidade: any) {
+    let index = this.cidadesBackup.indexOf(cidade);
+    this.cidadesBackup.splice(index, 1);
+    this.onChange();
   }
 
   onChange() {
@@ -176,13 +151,13 @@ export class CidadeComponent implements OnInit {
     return arr;
   }
 
-  getIndexCidade(cidadeId) {
+  getIndexCidade(cidadeId: any) {
     for (const c of this.cidadesBackup) {
       if (c.cidadeId == cidadeId) return this.cidadesBackup.indexOf(c);
     }
   }
 
-  getContemEstado(estado) {
+  getContemEstado(estado: { estadoId: any; }) {
     return this.estadosWithCidade
       .findIndex(val => {
         return (
@@ -191,7 +166,7 @@ export class CidadeComponent implements OnInit {
       });
   }
 
-  getEstadoContemCidade(estado) {
+  getEstadoContemCidade(estado: { estadoId: any; }) {
     return this.getEstadoComCidades()
       .findIndex(val => {
         return (
@@ -200,7 +175,7 @@ export class CidadeComponent implements OnInit {
       }) >= 0;
   }
 
-  addEstado(estado) {
+  addEstado(estado: { estadoId: any; }) {
     let estadoCopy = Object.assign({}, estado);
     this.estadosWithCidade.push(estadoCopy);
   }

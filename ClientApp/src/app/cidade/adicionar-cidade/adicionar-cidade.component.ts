@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EstadoService } from '../../services/estado/estado.service';
+import { CidadeService } from '../../services/cidade/cidade.service';
 
 @Component({
   selector: 'app-adicionar-cidade',
@@ -31,6 +32,7 @@ export class AdicionarCidadeComponent implements OnInit {
   }
 
   constructor(
+    private cidadeService: CidadeService,
     private estadoService: EstadoService,
     public dialogRef: MatDialogRef<AdicionarCidadeComponent>,
     @Inject(MAT_DIALOG_DATA) public data) { }
@@ -48,7 +50,14 @@ export class AdicionarCidadeComponent implements OnInit {
 
   onYes(){
     if (!this.form.invalid) {
-      this.dialogRef.close(this.form.value)
+      
+      this.cidadeService.create(this.form.value)
+        .subscribe(newCidade => {
+          this.dialogRef.close(newCidade);
+        }, error => {
+          alert("OCORREU UM ERRO NA HORA DE CRIAR \n" + error['_body'])
+        });
+
     } else {
       alert("Preencha o campo corretamente");
     }

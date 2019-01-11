@@ -31,6 +31,7 @@ import { CidadeService } from './services/cidade/cidade.service';
 import { EstadoService } from './services/estado/estado.service';
 import { EditarInstituicaoDeEnsinoComponent } from './instituicao-de-ensino/editar-instituicao-de-ensino/editar-instituicao-de-ensino.component';
 import { DeletarInstituicaoDeEnsinoComponent } from './instituicao-de-ensino/deletar-instituicao-de-ensino/deletar-instituicao-de-ensino.component';
+import { MostrarAlunosComponent } from './instituicao-de-ensino/mostrar-alunos/mostrar-alunos.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { DeletarInstituicaoDeEnsinoComponent } from './instituicao-de-ensino/del
     NovaInstituicaoDeEnsinoComponent,
     DeletarEstagiarioComponent,
     EditarInstituicaoDeEnsinoComponent,
-    DeletarInstituicaoDeEnsinoComponent
+    DeletarInstituicaoDeEnsinoComponent,
+    MostrarAlunosComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -83,7 +85,8 @@ import { DeletarInstituicaoDeEnsinoComponent } from './instituicao-de-ensino/del
     DeletarEstagiarioComponent,
     NovaInstituicaoDeEnsinoComponent,
     EditarInstituicaoDeEnsinoComponent,
-    DeletarInstituicaoDeEnsinoComponent
+    DeletarInstituicaoDeEnsinoComponent,
+    MostrarAlunosComponent
   ]
 })
 export class AppModule { }

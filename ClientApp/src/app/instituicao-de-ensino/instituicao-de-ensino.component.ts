@@ -5,6 +5,7 @@ import { MatDialog, MatTable } from '@angular/material';
 import { NovaInstituicaoDeEnsinoComponent } from './nova-instituicao-de-ensino/nova-instituicao-de-ensino.component';
 import { EditarInstituicaoDeEnsinoComponent } from './editar-instituicao-de-ensino/editar-instituicao-de-ensino.component';
 import { DeletarInstituicaoDeEnsinoComponent } from './deletar-instituicao-de-ensino/deletar-instituicao-de-ensino.component';
+import { MostrarAlunosComponent } from './mostrar-alunos/mostrar-alunos.component';
 
 @Component({
   selector: 'app-instituicao-de-ensino',
@@ -39,7 +40,7 @@ export class InstituicaoDeEnsinoComponent implements OnInit {
     })
   }
 
-  openUpdateDialog(instituicao) {
+  openUpdateDialog(instituicao: any) {
     const dialogRef = this.dialogRef.open(EditarInstituicaoDeEnsinoComponent, {
       width: '350px', disableClose: true, data: instituicao
     });
@@ -51,7 +52,7 @@ export class InstituicaoDeEnsinoComponent implements OnInit {
     })
   }
 
-  openDeleteDialog(instituicao) {
+  openDeleteDialog(instituicao: any) {
     const dialogRef = this.dialogRef.open(DeletarInstituicaoDeEnsinoComponent, {
       disableClose: true,
       width: '250px',
@@ -65,40 +66,35 @@ export class InstituicaoDeEnsinoComponent implements OnInit {
     });
   }
 
-  criarInstituicao(instituicao) {
-    this.instituicaoService.create(instituicao)
-      .subscribe(newInstituicao => {
-        this.instituicoesDeEnsino.push(newInstituicao);
-        this.table.renderRows();
-      }),
-      error => console.log(error)
+  openMostrarAlunosDialog(instituicao: any) {
+    this.dialogRef.open(MostrarAlunosComponent, {
+      disableClose: true,
+      width: '500px',
+      data: instituicao
+    });
   }
 
-  editarInstituicao(instituicaoDeEnsinoId, instituicao) {
-    this.instituicaoService.update(instituicaoDeEnsinoId, instituicao)
-    .subscribe(() => {
-      let index = this.getIndexInstituicao(instituicaoDeEnsinoId);
-      
-      instituicao['instituicaoDeEnsinoId'] = instituicaoDeEnsinoId;
-      this.instituicoesDeEnsino[index] = instituicao;
-
-      this.table.renderRows();
-    }),
-    error => console.log(error)
+  criarInstituicao(newInstituicao: any) {
+    this.instituicoesDeEnsino.push(newInstituicao);
+    this.table.renderRows();
   }
 
-  deletarInstituicao(instituicao) {
-    this.instituicaoService.delete(instituicao.instituicaoDeEnsinoId)
-      .subscribe(() => {
-        let index = this.instituicoesDeEnsino.indexOf(instituicao);
-        console.log(index);
-        this.instituicoesDeEnsino.splice(index, 1);
+  editarInstituicao(instituicaoDeEnsinoId: any, instituicao: { [x: string]: any; }) {
+    let index = this.getIndexInstituicao(instituicaoDeEnsinoId);
 
-        this.table.renderRows();
-      });
+    instituicao['instituicaoDeEnsinoId'] = instituicaoDeEnsinoId;
+    this.instituicoesDeEnsino[index] = instituicao;
+
+    this.table.renderRows();
   }
 
-  getIndexInstituicao(id){
+  deletarInstituicao(instituicao: any) {
+    let index = this.instituicoesDeEnsino.indexOf(instituicao);
+    this.instituicoesDeEnsino.splice(index, 1);
+    this.table.renderRows();
+  }
+
+  getIndexInstituicao(id: any) {
     for (const i of this.instituicoesDeEnsino) {
       if (i.instituicaoDeEnsinoId == id) return this.instituicoesDeEnsino.indexOf(i);
     }

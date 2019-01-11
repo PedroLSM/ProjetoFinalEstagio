@@ -1,6 +1,7 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { EstadoService } from '../../services/estado/estado.service';
 
 @Component({
   selector: 'app-novo-estado',
@@ -9,7 +10,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class NovoEstadoComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<NovoEstadoComponent>, 
+  constructor(private estadoService: EstadoService, private dialogRef: MatDialogRef<NovoEstadoComponent>, 
     @Inject(MAT_DIALOG_DATA) public data) { }
 
   formAdd = new FormGroup({
@@ -29,9 +30,16 @@ export class NovoEstadoComponent implements OnInit {
     return this.dialogRef.close();
   }
 
-  onYes(formValues){
+  onYes(formValues: { value: any; }){
     if (!this.formAdd.invalid) {
-      this.dialogRef.close(formValues.value);
+
+      this.estadoService.create(formValues.value)
+        .subscribe(newEstado => {
+          this.dialogRef.close(newEstado);
+        }, error => {
+          alert("OCORREU UM ERRO NA HORA DE CRIAR \n" + error['_body'])
+        });
+        
     } else {
       alert('CONTÉM CAMPOS INVÁLIDOS');
     }

@@ -19,7 +19,7 @@ export class NovaInstituicaoDeEnsinoComponent implements OnInit {
     nome: new FormControl('', [Validators.required])
   });
 
-  constructor(private dialogRef: MatDialogRef<NovaInstituicaoDeEnsinoComponent>, 
+  constructor(private instituicaoService: InstituicaoService, private dialogRef: MatDialogRef<NovaInstituicaoDeEnsinoComponent>, 
     @Inject(MAT_DIALOG_DATA) public data) {}
 
   ngOnInit() {
@@ -29,9 +29,16 @@ export class NovaInstituicaoDeEnsinoComponent implements OnInit {
     return this.dialogRef.close();
   }
 
-  onYes(formValues){
+  onYes(formValues: { value: any; }){
     if (!this.form.invalid) {
-      this.dialogRef.close(formValues.value);
+
+      this.instituicaoService.create(formValues.value)
+        .subscribe(newInstituicao => {
+          this.dialogRef.close(newInstituicao);
+        }, error => {
+          alert("OCORREU UM ERRO NA HORA DE CRIAR\n" + error['_body'])
+        });
+
     } else {
       alert('CONTÉM CAMPOS INVÁLIDOS');
     }

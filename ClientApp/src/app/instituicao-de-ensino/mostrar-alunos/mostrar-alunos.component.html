@@ -1,0 +1,20 @@
+<div fxFlex fxLayoutAlign="center center" fxLayout="column">
+  <mat-card-title>{{ data.nome }}</mat-card-title>
+  <mat-card-subtitle>Alunos</mat-card-subtitle>
+  
+  <br>
+
+  <div mat-dialog-content fxLayout="column" *ngFor="let e of estagiarios">
+    <b>{{ e.nome }}</b>
+  </div>
+
+  <div mat-dialog-content fxLayout="column" *ngIf="estagiarios + '' == []">
+    <b>Não Contém Alunos Registrados</b>
+  </div>
+
+  <br>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button type="button" mat-button [mat-dialog-close]="true">VOLTAR</button>
+  </div>
+  
+</div>

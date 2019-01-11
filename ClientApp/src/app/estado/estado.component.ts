@@ -16,6 +16,18 @@ export class EstadoComponent implements OnInit {
 
   colunas = ['Id', 'UF', 'Nome', 'Deletar', 'Alterar'];
 
+  constructor(public dialogRef: MatDialog, private estadoService: EstadoService) {
+  }
+
+  ngOnInit() {
+    this.estadoService.getAll().subscribe(
+      estados => {
+        this.estados = estados;
+      },
+      error => console.log(error)
+    );
+  }
+
   addDialog() {
     const dialogRef = this.dialogRef.open(NovoEstadoComponent, { disableClose: true });
 
@@ -26,7 +38,7 @@ export class EstadoComponent implements OnInit {
     })
   }
 
-  updateDialog(estado) {
+  updateDialog(estado: any) {
     const dialogRef = this.dialogRef.open(UpdateEstadoComponent, { disableClose: true, data: estado });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -36,7 +48,7 @@ export class EstadoComponent implements OnInit {
     })
   }
 
-  deleteDialog(estado) {
+  deleteDialog(estado: any) {
     const dialogRef = this.dialogRef.open(DeletarEstadoComponent, {
       disableClose: true,
       width: '250px',
@@ -50,55 +62,30 @@ export class EstadoComponent implements OnInit {
     });
   }
 
-  criarEstado(estado) {  
-    this.estadoService.create(estado)
-      .subscribe(newEstado => {
-        this.estados.push(newEstado);
-        this.table.renderRows();
-      }),
-      error => console.log(error)
+  criarEstado(newEstado: any) {
+    this.estados.push(newEstado);
+    this.table.renderRows();
   }
 
-  editarEstado(estadoId, estado) {
-    this.estadoService.update(estadoId, estado)
-      .subscribe(() => {
-        let index = this.getIndexEstado(estadoId);
-        
-        estado['estadoId'] = estadoId;
-        this.estados[index] = estado;
+  editarEstado(estadoId: any, estado: { [x: string]: any; }) {
+    let index = this.getIndexEstado(estadoId);
 
-        this.table.renderRows();
-      }),
-      error => console.log(error)
+    estado['estadoId'] = estadoId;
+    this.estados[index] = estado;
+
+    this.table.renderRows();
   }
 
-  deletarEstado(estado) {
-    this.estadoService.delete(estado.estadoId)
-      .subscribe(() => {
-        let index = this.estados.indexOf(estado);
-
-        this.estados.splice(index, 1);
-
-        this.table.renderRows();
-      });
+  deletarEstado(estado: void) {
+    let index = this.estados.indexOf(estado);
+    this.estados.splice(index, 1);
+    this.table.renderRows();
   }
 
-  getIndexEstado(id){
+  getIndexEstado(id: any) {
     for (const e of this.estados) {
       if (e.estadoId == id) return this.estados.indexOf(e);
     }
-  }
-
-  constructor(public dialogRef: MatDialog, private estadoService: EstadoService) {
-  }
-
-  ngOnInit() {
-    this.estadoService.getAll().subscribe(
-      estados => {
-        this.estados = estados;
-      },
-      error => console.log(error)
-    );
   }
 
 }

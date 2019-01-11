@@ -33,7 +33,7 @@
   <ng-container matColumnDef="Alunos">
     <th mat-header-cell *matHeaderCellDef class="operat"> <b>Alunos</b> </th>
     <td mat-cell *matCellDef="let instituicao">
-      <button mat-button>
+      <button (click)="openMostrarAlunosDialog(instituicao)" mat-button>
         <mat-icon>search</mat-icon>
       </button>
     </td>

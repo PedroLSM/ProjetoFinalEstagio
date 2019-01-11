@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { CidadeService } from '../../services/cidade/cidade.service';
 
 @Component({
   selector: 'app-deletar-cidade',
@@ -10,6 +11,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 export class DeletarCidadeComponent implements OnInit {
 
   constructor(
+    private cidadeService: CidadeService,
     public dialogRef: MatDialogRef<DeletarCidadeComponent>,
     @Inject(MAT_DIALOG_DATA) public data) { }
 
@@ -18,7 +20,12 @@ export class DeletarCidadeComponent implements OnInit {
     }
   
     onYes(){
-      this.dialogRef.close(this.data);
+      this.cidadeService.delete(this.data.cidadeId)
+        .subscribe(() => {
+          this.dialogRef.close(this.data);
+        }, error => {
+          alert("OCORREU UM ERRO NA HORA DE DELETAR \n" + error['_body'])
+        });
     }
 
   ngOnInit() {

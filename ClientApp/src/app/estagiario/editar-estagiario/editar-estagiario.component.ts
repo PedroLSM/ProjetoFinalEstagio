@@ -3,17 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { InstituicaoService } from '../../services/instituicao/instituicao.service';
 import { CidadeService } from '../../services/cidade/cidade.service';
-
-const INSTITUICAO = [
-  { id: 1, nome: "EEEP LEONEL DE MOURA BRIZOLA" },
-  { id: 2, nome: "Faculdade 7 de Setembro" }
-]
-
-const CIDADE = [
-  { cidadeId: 1, nome: 'Fortaleza', UF: "CE" },
-  { cidadeId: 2, nome: 'São Paulo', UF: "SP" },
-  { cidadeId: 3, nome: 'Rio de Janeiro', UF: "RJ" }
-]
+import { EstagiarioService } from '../../services/estagiario/estagiario.service';
 
 @Component({
   selector: 'app-editar-estagiario',
@@ -39,7 +29,7 @@ export class EditarEstagiarioComponent implements OnInit {
     dataNasc: new FormControl(this.dataWrite(), [Validators.required])
   });
 
-  constructor(private instituicaoService: InstituicaoService, private cidadeService: CidadeService,
+  constructor(private estagiarioService: EstagiarioService, private instituicaoService: InstituicaoService, private cidadeService: CidadeService,
     public dialogRef: MatDialogRef<EditarEstagiarioComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {
   }
@@ -107,7 +97,13 @@ export class EditarEstagiarioComponent implements OnInit {
   onYesClick(formValues): void {
     if (!this.form.invalid) {
       formValues.value.dataNasc = this.convertDate(formValues.value.dataNasc);
-      this.dialogRef.close([this.estagiarioId, formValues.value]);
+
+      this.estagiarioService.update(this.estagiarioId, formValues.value)
+        .subscribe((estagiarioEdited) => {
+          this.dialogRef.close([this.estagiarioId, estagiarioEdited]);
+        }, error => {
+          alert("OCORREU UM ERRO NA HORA DE EDITAR \n" + error['_body'])
+        });
     } else {
       alert('CONTÉM CAMPOS INVÁLIDOS');
     }

@@ -5,19 +5,6 @@ import { EditarEstagiarioComponent } from './editar-estagiario/editar-estagiario
 import { DeletarEstagiarioComponent } from './deletar-estagiario/deletar-estagiario.component';
 import { EstagiarioService } from '../services/estagiario/estagiario.service';
 
-
-const INSTITUICAO = [
-  { id: 1, nome: "EEEP LEONEL DE MOURA BRIZOLA" },
-  { id: 2, nome: "Faculdade 7 de Setembro" }
-]
-
-const CIDADE = [
-  { id: 1, nome: 'Fortaleza', UF: "CE" },
-  { id: 2, nome: 'São Paulo', UF: "SP" },
-  { id: 3, nome: 'Rio de Janeiro', UF: "RJ" }
-]
-
-
 @Component({
   selector: 'app-estagiario',
   templateUrl: './estagiario.component.html',
@@ -52,7 +39,7 @@ export class EstagiarioComponent implements OnInit {
     })
   }
 
-  abrirDialogoEditar(estagiario) {
+  abrirDialogoEditar(estagiario: any) {
     const dialogRef = this.dialog.open(EditarEstagiarioComponent, {
       width: '500px',
       disableClose: true,
@@ -67,7 +54,7 @@ export class EstagiarioComponent implements OnInit {
     })
   }
 
-  abrirDialogoDeletar(estagiario) {
+  abrirDialogoDeletar(estagiario: any) {
     const dialogRef = this.dialog.open(DeletarEstagiarioComponent, {
       width: '300px',
       disableClose: true,
@@ -81,40 +68,24 @@ export class EstagiarioComponent implements OnInit {
     })
   }
 
-  deletarEstagiario(estagiario) {
-    this.estagiarioService.delete(estagiario.estagiarioId)
-      .subscribe(() => {
-        this.estagiarios = this.estagiarios.filter(e => {
-          if (e != estagiario) return true;
-        });
-      }),
-      error => console.log(error);
-
+  deletarEstagiario(estagiario: any) {
+    this.estagiarios = this.estagiarios.filter(e => {
+      if (e != estagiario) return true;
+    });
   }
 
-  criarEstagiario(estagiario) {
-    this.estagiarioService.create(estagiario)
-      .subscribe(newEstagiario => {
-        this.estagiarios.push(newEstagiario);
-        this.table.renderRows();
-      }),
-      error => console.log(error)
+  criarEstagiario(newEstagiario: any) {
+    this.estagiarios.push(newEstagiario);
+    this.table.renderRows();
   }
 
-  editarEstagiario(estagiarioId, estagiario) {
-
-    this.estagiarioService.update(estagiarioId, estagiario)
-      .subscribe((estagiarioEdited) => {
-        let index = this.getIndexEstagiario(estagiarioId);
-        this.estagiarios[index] = estagiarioEdited;
-
-        console.log(estagiarioEdited);
-        this.table.renderRows();
-      }),
-      error => console.log(error)
+  editarEstagiario(estagiarioId: any, estagiarioEdited: any) {
+    let index = this.getIndexEstagiario(estagiarioId);
+    this.estagiarios[index] = estagiarioEdited;
+    this.table.renderRows();
   }
 
-  getIndexEstagiario(id) {
+  getIndexEstagiario(id: any) {
     for (const e of this.estagiarios) {
       if (e.estagiarioId == id) return this.estagiarios.indexOf(e);
     }

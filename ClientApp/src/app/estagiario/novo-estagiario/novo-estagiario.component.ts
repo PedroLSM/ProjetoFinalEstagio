@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { InstituicaoService } from '../../services/instituicao/instituicao.service';
 import { IInstituicaoDeEnsino } from '../../services/instituicao/IInstituicaoDeEnsino';
 import { CidadeService } from '../../services/cidade/cidade.service';
+import { EstagiarioService } from '../../services/estagiario/estagiario.service';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class NovoEstagiarioComponent implements OnInit {
     dataNasc: new FormControl('', [Validators.required])
   });
 
-  constructor(private instituicaoService: InstituicaoService, private cidadeService: CidadeService, public dialogRef: MatDialogRef<NovoEstagiarioComponent>,
+  constructor(private estagiarioService: EstagiarioService, private instituicaoService: InstituicaoService, private cidadeService: CidadeService, public dialogRef: MatDialogRef<NovoEstagiarioComponent>,
     @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit() {
@@ -89,7 +90,14 @@ export class NovoEstagiarioComponent implements OnInit {
   onYesClick(formValues): void {
     if (!this.form.invalid) {
       formValues.value.dataNasc = this.convertDate(formValues.value.dataNasc);
-      this.dialogRef.close(formValues.value);
+    
+      this.estagiarioService.create(formValues.value)
+        .subscribe(newEstagiario => {
+          this.dialogRef.close(newEstagiario);
+        }, error =>{ 
+          alert("OCORREU UM ERRO NA HORA DE CRIAR \n" + error['_body'])
+        });
+        
     } else {
       alert('CONTÉM CAMPOS INVÁLIDOS');
     }
